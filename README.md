@@ -9,3 +9,5 @@ Reimagination of the RhyCerBot project in Python, with different featureset in m
 
 ## Non user-facing features:
 - Determine user's level of permissions, based on if they are a subscriber, owner, follower, or just viewer of the stream this bot is attached to
+
+These lists are going to grow as more features are scheduled to be added
