@@ -19,3 +19,47 @@
  - In the future, hosting this process on the web would make creating a GUI easy and make the data easier to secure
 
 '''
+
+import socket
+
+
+# loop to keep bot running
+def get_text(irc):
+    text = irc.recv(2040)
+    if text.find('PING') != -1:
+        irc.send('PONG ' + text.split()[1] + 'rn')
+
+    return text
+
+
+def connect(channelIn, passwordIn):
+
+    bot_owner = 'loki_ssb'
+    nick = 'iroh_bot'
+    channel = '#' + channelIn
+    server = 'irc.chat.twitch.tv'
+    password = passwordIn
+
+    irc = socket.socket()
+    irc.connect((server, 6667))
+    print irc.getsockname
+
+    # send vars for connection to twitch chat
+    irc.send('PASS ' + password + '\r\n')
+    irc.send('USER ' + nick + '\r\n')
+    irc.send('NICK ' + nick + '\r\n')
+    irc.send('JOIN ' + channel + '\r\n')
+
+    x = 1
+    while 1:
+        if x == 1:
+            irc.send(bytes("PRIVMSG " + channel + " :" + "Hello There" + "\n"))
+            x = 0
+        text = get_text(irc)
+        print text
+
+
+connect('mikamora', 'oauth:p80gefayqxc6hijs0nhp5ph5sbdqdd')
+
+
+# things are going to have to move around but it functions
